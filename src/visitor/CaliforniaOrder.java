@@ -20,5 +20,8 @@ public class CaliforniaOrder implements Order {
   public void accept(OrderVisitor v) {
     v.visit(this);
   }
+  public String toString() {
+        return "California Order \n Order Amount: " + getOrderAmount() + ", Additional Tax: " + getAdditionalTax();
+  }
 }
 

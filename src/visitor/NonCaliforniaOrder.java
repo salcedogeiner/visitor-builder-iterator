@@ -14,4 +14,7 @@ public class NonCaliforniaOrder implements Order {
   public void accept(OrderVisitor v) {
     v.visit(this);
   }
+  public String toString() {
+        return "Non California Order \n Order Amount: " + getOrderAmount();
+  }
 }

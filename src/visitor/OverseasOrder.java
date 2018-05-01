@@ -20,4 +20,7 @@ public class OverseasOrder implements Order {
   public void accept(OrderVisitor v) {
     v.visit(this);
   }
+  public String toString() {
+        return "Overseas Order \n Order Amount: " + getOrderAmount() + ", Additional SH: " + getAdditionalSH();
+  }
 }

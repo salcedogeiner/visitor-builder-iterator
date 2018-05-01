@@ -274,6 +274,11 @@ class ButtonHandler implements ActionListener {
                       visitor.getOrderTotal()).toString();
       totalResult = " Orders Total = " + totalResult;
       objOrderManager.setTotalValue(totalResult);
+      
+      Iterator orders = visitor.getOrders(); 
+      while (orders.hasNext()) {
+          System.out.println(orders.next());
+      }
     }
   }
 
