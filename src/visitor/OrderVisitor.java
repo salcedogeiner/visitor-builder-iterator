@@ -10,25 +10,21 @@ class OrderVisitor implements VisitorInterface {
   }
   public void visit(NonCaliforniaOrder inp_order) {
     this.orderObjList.add(inp_order);
-    orderTotal = orderTotal + inp_order.getOrderAmount();
   }
   public void visit(CaliforniaOrder inp_order) {
     this.orderObjList.add(inp_order);
-    orderTotal = orderTotal + inp_order.getOrderAmount() +
-                 inp_order.getAdditionalTax();
   }
   public void visit(OverseasOrder inp_order) {
     this.orderObjList.add(inp_order);
-    orderTotal = orderTotal + inp_order.getOrderAmount() +
-                 inp_order.getAdditionalSH();
   }
   
   public double getOrderTotal(){
+      orderTotal=0; 
+      Iterator iterator = new OrderIterator(orderObjList); 
+      while (iterator.hasNext()) {
+          Order order = (Order)iterator.next();
+          orderTotal += order.getTotalOrder();
+      }
       return this.orderTotal;
-  }
-  
-  public Iterator getOrders() {
-    return new OrderIterator(orderObjList);      
-  } 
-  
+  }  
 }

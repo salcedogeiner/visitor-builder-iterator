@@ -3,6 +3,7 @@ package visitor;
 public class OverseasOrder implements Order {
   private double orderAmount;
   private double additionalSH;
+  private double totalOrder;
 
   public OverseasOrder() {
   }
@@ -10,6 +11,7 @@ public class OverseasOrder implements Order {
       double inp_additionalSH) {
     orderAmount = inp_orderAmount;
     additionalSH = inp_additionalSH;
+    totalOrder = orderAmount + additionalSH;            
   }
   public double getOrderAmount() {
     return orderAmount;
@@ -20,7 +22,7 @@ public class OverseasOrder implements Order {
   public void accept(OrderVisitor v) {
     v.visit(this);
   }
-  public String toString() {
-        return "Overseas Order \n Order Amount: " + getOrderAmount() + ", Additional SH: " + getAdditionalSH();
+  public double getTotalOrder() {
+      return totalOrder;
   }
 }
