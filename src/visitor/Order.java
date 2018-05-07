@@ -2,5 +2,5 @@ package visitor;
 
 public interface Order {
   public void accept(OrderVisitor v);
-  public double getTotalOrder();
+  public double getOrderAmount();
 }

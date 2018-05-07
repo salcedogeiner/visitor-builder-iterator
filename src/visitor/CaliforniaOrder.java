@@ -3,7 +3,6 @@ package visitor;
 public class CaliforniaOrder implements Order {
   private double orderAmount;
   private double additionalTax;
-  private double totalOrder;
 
   public CaliforniaOrder() {
   }
@@ -11,7 +10,6 @@ public class CaliforniaOrder implements Order {
       double inp_additionalTax) {
     orderAmount = inp_orderAmount;
     additionalTax = inp_additionalTax;
-    totalOrder= orderAmount + additionalTax;
   }
   public double getOrderAmount() {
     return orderAmount;
@@ -22,8 +20,5 @@ public class CaliforniaOrder implements Order {
   public void accept(OrderVisitor v) {
     v.visit(this);
   }  
-  public double getTotalOrder() {
-      return totalOrder;
-  }
 }
 

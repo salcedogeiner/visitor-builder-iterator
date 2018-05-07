@@ -239,7 +239,7 @@ class ButtonHandler implements ActionListener {
         objOrderManager.getOrderVisitor();
 
       // accept the visitor instance
-      order.accept(visitor);
+      visitor.addOrder(order);
 
       objOrderManager.setTotalValue(
         " Order Created Successfully");
