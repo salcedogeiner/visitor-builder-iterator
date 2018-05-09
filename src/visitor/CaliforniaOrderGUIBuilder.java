@@ -27,7 +27,7 @@ public class CaliforniaOrderGUIBuilder implements IOrderGUIBuilder{
         return panel;        
     }
     
-    public  void initialize() {
+    public void initialize() {
         panel = new JPanel();
         orderGUI = new CaliforniaOrderGUI("Order Amount:",10,
                 "Additional Tax(CA Orders Only):",10);

@@ -17,5 +17,6 @@ public interface IOrderGUIBuilder {
     public String getOrderAmount();
     public String getTax();
     public String getSH();
+    public void initialize();
     
 }

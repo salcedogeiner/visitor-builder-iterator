@@ -19,6 +19,8 @@ public class OrderManager extends JFrame {
     public static final String NON_CA_ORDER = "Non-California Order";
     public static final String OVERSEAS_ORDER = "Overseas Order";
     public static final String ORDER_TYPE = "Order Type";
+    public static final String BLANK = "";
+            
 
     private JComboBox cmbOrderType;
     private JLabel lblOrderType;
@@ -28,13 +30,14 @@ public class OrderManager extends JFrame {
     private JPanel ordersPanel;
 
     public OrderManager() {
-        super("Visitor Pattern - Example");
+        super("Liquidator Orders");
 
         //Create the visitor instance
         objVisitor = new OrderVisitor();
 
         cmbOrderType = new JComboBox();
         cmbOrderType.setActionCommand(OrderManager.ORDER_TYPE);
+        cmbOrderType.addItem(OrderManager.BLANK);
         cmbOrderType.addItem(OrderManager.CA_ORDER);
         cmbOrderType.addItem(OrderManager.NON_CA_ORDER);
         cmbOrderType.addItem(OrderManager.OVERSEAS_ORDER);
@@ -128,7 +131,7 @@ public class OrderManager extends JFrame {
         contentPane.add(buttonPanel, BorderLayout.NORTH);
         contentPane.add(ordersPanel, BorderLayout.CENTER);
         contentPane.add(panel, BorderLayout.SOUTH);
-        cmbOrderType.setSelectedIndex(0);
+       
         try {
             UIManager.setLookAndFeel(new WindowsLookAndFeel());
             SwingUtilities.updateComponentTreeUI(
@@ -187,54 +190,65 @@ class ButtonHandler implements ActionListener {
 
         if (e.getActionCommand().equals(OrderManager.ORDER_TYPE)) {
             String selection = objOrderManager.getOrderType();
-            objOrderManager.setTotalValue("Click Create or GetTotal Button");
-            
-            OrderGUIFactory  builderFactory = new OrderGUIFactory();
-            builder = builderFactory.getOrdernGUIBuilder(selection);
-          
-            OrderDirector orderDirectorGUI = new OrderDirector(builder);
-            objOrderManager.refreshPanel(orderDirectorGUI.getOrderGUI());
+            if(selection.equals("")){
+                objOrderManager.refreshPanel(new JPanel());
+            }else{
+                objOrderManager.setTotalValue("Click Create or GetTotal Button");
+
+                OrderGUIFactory  builderFactory = new OrderGUIFactory();
+                builder = builderFactory.getOrdernGUIBuilder(selection);
+
+                OrderDirector orderDirectorGUI = new OrderDirector(builder);
+                objOrderManager.refreshPanel(orderDirectorGUI.getOrderGUI());
+            }
         }
         if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)) {
-            //get input values
+            
             String orderType = objOrderManager.getOrderType();
-            String strOrderAmount
-                    = builder.getOrderAmount();
-            String strTax = builder.getTax();
-            String strSH = builder.getSH();
+            if(orderType.equals("")){
+                JOptionPane.showMessageDialog(objOrderManager, "Select Type Order");
+                
+            }else{
+            
+                //get input values
+                String strOrderAmount
+                        = builder.getOrderAmount();
+                String strTax = builder.getTax();
+                String strSH = builder.getSH();
 
-            double dblOrderAmount = 0.0;
-            double dblTax = 0.0;
-            double dblSH = 0.0;
+                double dblOrderAmount = 0.0;
+                double dblTax = 0.0;
+                double dblSH = 0.0;
 
-            if (strOrderAmount.trim().length() == 0) {
-                strOrderAmount = "0.0";
-            }
-            if (strTax.trim().length() == 0) {
-                strTax = "0.0";
-            }
-            if (strSH.trim().length() == 0) {
-                strSH = "0.0";
-            }
+                if (strOrderAmount.trim().length() == 0) {
+                    strOrderAmount = "0.0";
+                }
+                if (strTax.trim().length() == 0) {
+                    strTax = "0.0";
+                }
+                if (strSH.trim().length() == 0) {
+                    strSH = "0.0";
+                }
 
-            dblOrderAmount
-                    = new Double(strOrderAmount).doubleValue();
-            dblTax = new Double(strTax).doubleValue();
-            dblSH = new Double(strSH).doubleValue();
+                dblOrderAmount
+                        = new Double(strOrderAmount).doubleValue();
+                dblTax = new Double(strTax).doubleValue();
+                dblSH = new Double(strSH).doubleValue();
 
-            //Create the order
-            Order order = createOrder(orderType, dblOrderAmount,
-                    dblTax, dblSH);
+                //Create the order
+                Order order = createOrder(orderType, dblOrderAmount,
+                        dblTax, dblSH);
 
-            //Get the Visitor
-            OrderVisitor visitor
-                    = objOrderManager.getOrderVisitor();
+                //Get the Visitor
+                OrderVisitor visitor
+                        = objOrderManager.getOrderVisitor();
 
-            // accept the visitor instance
-            visitor.addOrder(order);
+                // accept the visitor instance
+                visitor.addOrder(order);
 
-            objOrderManager.setTotalValue(
-                    " Order Created Successfully");
+                objOrderManager.setTotalValue(
+                        " Order Created Successfully");
+            }    
         }
 
         if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
